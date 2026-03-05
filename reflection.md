@@ -6,7 +6,15 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What did the game look like the first time you ran it?
 - List at least two concrete bugs you noticed at the start  
-  (for example: "the secret number kept changing" or "the hints were backwards").
+   (for example: "the secret number kept changing" or "the hints were backwards").
+
+- 1.When we narrowed down the possible range into one integer, it should be the right answer but the message said it was not.
+- 2.When we type a float number 6.5. But the records shows 6. The system will revise user's input.
+- 3.Records inconsistency:
+  - attempt left number is inconsistent with history record and system message.
+  - Score in the table is inconsistent with system message.
+- 4.When user clicks new game button. The history board did not clear its content. System message still told user that "Game over. Start a new game to try again." But it should start a new game.
+- 5.The system message gives user a wrong hint.
 
 ---
 
