@@ -71,3 +71,50 @@ def test_new_game_resets_state():
     assert session_state["attempts"] == 0
     assert session_state["history"] == []
     assert session_state["status"] == "playing"
+
+
+def test_edge_cases_get_range_for_difficulty():
+    # Edge case: unexpected difficulty levels
+    assert get_range_for_difficulty("Impossible") == (1, 100)
+    assert get_range_for_difficulty("") == (1, 100)
+    assert get_range_for_difficulty(None) == (1, 100)
+
+
+def test_edge_cases_parse_guess():
+    # Edge case: None input
+    assert parse_guess(None) == (False, None, "Enter a guess.")
+
+    # Edge case: empty string
+    assert parse_guess("") == (False, None, "Enter a guess.")
+
+    # Edge case: large numbers
+    assert parse_guess("999999999999") == (True, 999999999999, None)
+
+    # Edge case: special characters
+    assert parse_guess("!@#$") == (False, None, "That is not a number.")
+
+
+def test_edge_cases_check_guess():
+    # Edge case: guess is not a number
+    outcome, message = check_guess("abc", 50)
+    assert outcome == "Error"
+    assert message == "Invalid input. Please enter a number."
+
+    # Edge case: secret is not a number
+    outcome, message = check_guess(50, "xyz")
+    assert outcome == "Error"
+    assert message == "Invalid input. Please enter a number."
+
+
+def test_edge_cases_update_score():
+    # Edge case: negative attempt number
+    score = update_score(0, "Win", -1)
+    assert score == 110  # 100 - 10 * (-1)
+
+    # Edge case: very high attempt number
+    score = update_score(0, "Win", 1000)
+    assert score == 10  # Minimum score is 10
+
+    # Edge case: invalid outcome
+    score = update_score(0, "Invalid", 1)
+    assert score == 0
