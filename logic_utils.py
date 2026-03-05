@@ -1,5 +1,13 @@
 def get_range_for_difficulty(difficulty: str):
-    """Return (low, high) inclusive range for a given difficulty."""
+    """
+    Return the range of numbers for a given difficulty level.
+
+    Args:
+        difficulty (str): The difficulty level (e.g., "Easy", "Normal", "Hard").
+
+    Returns:
+        tuple: A tuple containing the lower and upper bounds of the range.
+    """
     if difficulty == "Easy":
         return 1, 20
     if difficulty == "Normal":
@@ -11,9 +19,14 @@ def get_range_for_difficulty(difficulty: str):
 
 def parse_guess(raw: str):
     """
-    Parse user input into an int guess.
+    Parse user input into an integer guess.
 
-    Returns: (ok: bool, guess_int: int | None, error_message: str | None)
+    Args:
+        raw (str): The raw input string from the user.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success, the parsed integer (or None),
+               and an error message (or None).
     """
     if raw is None or raw == "":
         return False, None, "Enter a guess."
@@ -35,9 +48,15 @@ def parse_guess(raw: str):
 
 def check_guess(guess, secret):
     """
-    Compare guess to secret and return (outcome, message).
+    Compare the user's guess to the secret number.
 
-    outcome examples: "Win", "Too High", "Too Low"
+    Args:
+        guess (int or str): The user's guess.
+        secret (int or str): The secret number to compare against.
+
+    Returns:
+        tuple: A tuple containing the outcome ("Win", "Too High", "Too Low", or "Error")
+               and a corresponding message.
     """
     try:
         guess = int(guess)
@@ -54,9 +73,19 @@ def check_guess(guess, secret):
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
-    """Update score based on outcome and attempt number."""
+    """
+    Update the player's score based on the game outcome and attempt number.
+
+    Args:
+        current_score (int): The player's current score.
+        outcome (str): The outcome of the guess ("Win", "Too High", "Too Low").
+        attempt_number (int): The current attempt number.
+
+    Returns:
+        int: The updated score.
+    """
     if outcome == "Win":
-        points = 100 - 10 * attempt_number  # Adjusted formula to match test expectation
+        points = 100 - 10 * attempt_number
         if points < 10:
             points = 10
         return current_score + points
